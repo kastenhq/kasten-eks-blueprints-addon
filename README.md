@@ -30,6 +30,7 @@ More detailed K10 architecture diagram is shown below.
 ```typescript
 import * as cdk from '@aws-cdk/core';
 import * as ssp from '../lib';
+import { KastenK10AddOn } from '@kastenhq/kasten-aws-quickstart';
 
 const app = new cdk.App();
 
