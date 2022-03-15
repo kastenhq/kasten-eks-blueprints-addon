@@ -6,7 +6,7 @@ Home for the AWS SSP Quickstart for Kasten K10 by Veeam
 **Kasten K10 by Veeam Overview**
 
 The K10 data management platform, purpose-built for Kubernetes, provides enterprise operations teams an easy-to-use, scalable, and secure system for backup/restore, disaster recovery, and mobility of Kubernetes applications.
-![Kasten-K10 Overview](./../assets/images/kastenk10_image1.png)
+![Kasten-K10 Overview](/docs/assets/images/kastenk10_image1.png)
 K10’s application-centric approach and deep integrations with relational and NoSQL databases, Amazon EKS and AWS Services provides teams the freedom of infrastructure choice without sacrificing operational simplicity. Policy-driven and extensible, K10 provides a native Kubernetes API and includes features such full-spectrum consistency, database integrations, automatic application discovery, application mobility, and a powerful web-based user interface.
 
 Given K10’s extensive ecosystem support you have the flexibility to choose environments (public/ private/ hybrid cloud/ on-prem) and Kubernetes distributions (cloud vendor managed or self managed) in support of three principal use cases:
@@ -16,15 +16,15 @@ Given K10’s extensive ecosystem support you have the flexibility to choose env
 -   [Disaster Recovery](https://www.kasten.io/kubernetes/use-cases/disaster-recovery/)
     
 -   [Application Mobility](https://www.kasten.io/kubernetes/use-cases/application-mobility/)
-![Kasten-K10 Use Cases ](./../assets/images/kastenk10_image2.png)
+![Kasten-K10 Use Cases ](/docs/assets/images/kastenk10_image2.png)
 
 The Kasten K10 add-on installs Kasten K10 into your Amazon EKS cluster. 
 
 ## Architecture
 Deploying this Quick Start for a new virtual private cloud (VPC) with default parameters builds the following K10 platform in the AWS Cloud. The diagram shows three Availability Zones, leveraging multiple AWS services.
-![Kasten-K10 Architecture](./../assets/images/kastenk10_image3.png)
+![Kasten-K10 Architecture](/docs/assets/images/kastenk10_image3.png)
 More detailed K10 architecture diagram is shown below.
-![Kasten-K10 Architecture](./../assets/images/kastenk10_image4.png)
+![Kasten-K10 Architecture](/docs/assets/images/kastenk10_image4.png)
 ## Usage
 
 ```typescript
