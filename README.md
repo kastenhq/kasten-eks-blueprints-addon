@@ -1,7 +1,4 @@
-# kasten-aws-quickstart
-Home for the AWS SSP Quickstart for Kasten K10 by Veeam
-
-# Kasten K10 Add-On
+# Kasten K10 Add-On for AWS EKS Quickstart
 
 **Kasten K10 by Veeam Overview**
 
@@ -25,6 +22,13 @@ Deploying this Quick Start for a new virtual private cloud (VPC) with default pa
 ![Kasten-K10 Architecture](/docs/assets/images/kastenk10_image3.png)
 More detailed K10 architecture diagram is shown below.
 ![Kasten-K10 Architecture](/docs/assets/images/kastenk10_image4.png)
+
+## Installation
+
+```
+npm install @kastenhq/kasten-aws-quickstart
+```
+
 ## Usage
 
 ```typescript
