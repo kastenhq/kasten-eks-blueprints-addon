@@ -33,6 +33,6 @@
         "dist"
     ],
     "include": [
-        "lib"
+        "lib/**/*"
     ]
 }
