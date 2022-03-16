@@ -1,6 +1,6 @@
 {
     "name": "@kastenhq/kasten-aws-quickstart",
-    "version": "1.0.1",
+    "version": "1.0.2",
     "description": "Kasten K10 Addon for AWS SSP CDK Platform",
     "main": "dist/index.js",
     "types": "dist/index.d.ts",
@@ -8,9 +8,6 @@
         "build": "rm -rf dist && tsc",
         "test": "jest"
     },
-    "files": [
-        "/dist"
-    ],
     "repository": {
         "type": "git",
         "url": "git+https://github.com/kastenhq/kasten-aws-quickstart.git"
