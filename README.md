@@ -32,14 +32,15 @@ npm install @kastenhq/kasten-aws-quickstart
 ## Usage
 
 ```typescript
+import 'source-map-support/register';
 import * as cdk from '@aws-cdk/core';
-import * as ssp from '../lib';
+import * as ssp from '@aws-quickstart/ssp-amazon-eks';
 import { KastenK10AddOn } from '@kastenhq/kasten-aws-quickstart';
 
 const app = new cdk.App();
 
 const addOns: Array<ssp.ClusterAddOn> = [
-  new ssp.addons.KastenK10AddOn(),
+  new KastenK10AddOn(),
 ];
 
 new ssp.EksBlueprint(
