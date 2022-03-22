@@ -1,17 +1,50 @@
 import * as iam from "@aws-cdk/aws-iam";
-import { ClusterInfo, ClusterPostDeploy, Team } from '@aws-quickstart/ssp-amazon-eks/dist/spi';
-import { ManagedPolicy } from '@aws-cdk/aws-iam';
-import { Construct } from '@aws-cdk/core';
 import * as ssp from '@aws-quickstart/ssp-amazon-eks';
-import { HelmAddOn, HelmAddOnProps, HelmAddOnUserProps } from '@aws-quickstart/ssp-amazon-eks/dist/addons/helm-addon';
-import { createNamespace } from "@aws-quickstart/ssp-amazon-eks/dist/utils";
+import { Construct } from '@aws-cdk/core';
+import { ServiceAccount } from '@aws-cdk/aws-eks';
 import { KastenEC2IamPolicy } from "./iam-policy";
 
 
-export type KastenK10AddOnProps = HelmAddOnUserProps;
+export interface KastenK10AddOnProps {
+    /**
+     * Helm chart repository.
+     * Defaults to the official repo URL.
+     */
+    repository?: string;
+
+    /**
+     * Release name.
+     * Defaults to 'k10'.
+     */
+    release?: string;
+
+    /**
+     * Chart name.
+     * Defaults to 'k10'.
+     */
+    chart?: string;
+
+    /**
+     * Helm chart version
+     */
+    version?: string;
+
+    /**
+     * Namespace for the add-on.
+     */
+    namespace?: string;
+
+    /**
+     * Kubernetes cluster name.
+     */
+    clusterName?: string;
+
+    name?: string;
+    serviceAccountCreate?: boolean;
+}
 
 
-const K10_SA = 'k10-sa-ssp';
+//const K10_SA = 'k10-sa-ssp';
 
 /**
  * Properties available to configure Kasten K10.
@@ -19,56 +52,64 @@ const K10_SA = 'k10-sa-ssp';
  * version default is 4.5.11
  * values as per https://docs.kasten.io
  */
-const defaultProps = {
+const defaultProps: KastenK10AddOnProps = {
     name: 'kasten',
     release: 'k10',
     namespace: 'kasten-io',
-    createNamespace: true,
     chart: 'k10',
     repository: "https://charts.kasten.io/",
-    version: '4.5.11'
+    version: '4.5.11',
+    serviceAccountCreate: false,
+    values: {}
 }
 
-export class KastenK10AddOn extends HelmAddOn  {
+export class KastenK10AddOn implements ssp.ClusterAddOn  {
 
    // private options: KastenK10AddOnProps;
     
     readonly options: KastenK10AddOnProps;
     
     constructor(props?: KastenK10AddOnProps) {
-        super({...defaultProps, ...props});
-        this.options = this.props as KastenK10AddOnProps;
+      this.options = { ...defaultProps, ...props };
     }
 
-    deploy(clusterInfo: ssp.ClusterInfo): void | Promise<Construct> {
-
+    deploy(clusterInfo: ssp.ClusterInfo): Promise<Construct> {
+        const props = this.options;
         const cluster = clusterInfo.cluster;
-
-        const namespace = createNamespace('kasten-io', cluster);
+        
+        // Create namespace.
+        const ns = ssp.utils.createNamespace(props.namespace!, clusterInfo.cluster, true);
 
         //Create Service Account
-        const serviceAccount = cluster.addServiceAccount('k10-sa-ssp', {
-            name: K10_SA,
-            namespace: this.options.namespace,
+        const sa = clusterInfo.cluster.addServiceAccount('k10-sa-ssp', {
+            name: 'k10-sa-ssp',
+            namespace: props.namespace
         });
 
-        //Populate Service Account with Infput from iam-policy.ts
+        //Populate Service Account with Input from iam-policy.ts
         KastenEC2IamPolicy.Statement.forEach((statement) => {
-            serviceAccount.addToPrincipalPolicy(iam.PolicyStatement.fromJson(statement));
+            sa.addToPrincipalPolicy(iam.PolicyStatement.fromJson(statement));
         });
         
-        const KastenK10Chart = this.addHelmChart(clusterInfo, {
-            clusterName: cluster.clusterName,
-            serviceAccount: {
-                create: false,
-                name: serviceAccount.serviceAccountName,
-            },
+         sa.node.addDependency(ns);
 
-        });
+    const KastenK10HelmChart = clusterInfo.cluster.addHelmChart('k10', {
+      chart: props.chart!,
+      release: props.release,
+      repository: props.repository,
+      namespace: props.namespace,
+      version: props.version,
+      let values = merge({
+         serviceAccount: {
+           create: props.serviceAccountCreate,
+           name: sa.serviceAccountName
+         }
+      }, this.options.values ?? {})
+    });
 
-        KastenK10Chart.node.addDependency(serviceAccount);
+        KastenK10HelmChart.node.addDependency(sa);
 
-        return Promise.resolve(KastenK10Chart);
+        return Promise.resolve(KastenK10HelmChart);
     }
     
     
