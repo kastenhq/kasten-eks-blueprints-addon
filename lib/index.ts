@@ -38,8 +38,15 @@ export interface KastenK10AddOnProps {
      * Kubernetes cluster name.
      */
     clusterName?: string;
-
+    
+    /**
+     * Defaults to 'kasten'
+     */
     name?: string;
+    
+    /**
+     * serviceAccount name.
+     */
     serviceAccount?: string;
 }
 
