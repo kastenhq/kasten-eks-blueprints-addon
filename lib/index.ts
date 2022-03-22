@@ -40,7 +40,7 @@ export interface KastenK10AddOnProps {
     clusterName?: string;
 
     name?: string;
-    serviceAccountCreate?: boolean;
+    serviceAccount?: string;
 }
 
 
@@ -59,16 +59,15 @@ const defaultProps: KastenK10AddOnProps = {
     chart: 'k10',
     repository: "https://charts.kasten.io/",
     version: '4.5.11',
-    serviceAccountCreate: false,
-    values: {}
+    serviceAccount: '',
 }
 
 export class KastenK10AddOn implements ssp.ClusterAddOn  {
 
    // private options: KastenK10AddOnProps;
-    
+
     readonly options: KastenK10AddOnProps;
-    
+
     constructor(props?: KastenK10AddOnProps) {
       this.options = { ...defaultProps, ...props };
     }
@@ -76,7 +75,7 @@ export class KastenK10AddOn implements ssp.ClusterAddOn  {
     deploy(clusterInfo: ssp.ClusterInfo): Promise<Construct> {
         const props = this.options;
         const cluster = clusterInfo.cluster;
-        
+
         // Create namespace.
         const ns = ssp.utils.createNamespace(props.namespace!, clusterInfo.cluster, true);
 
@@ -90,7 +89,7 @@ export class KastenK10AddOn implements ssp.ClusterAddOn  {
         KastenEC2IamPolicy.Statement.forEach((statement) => {
             sa.addToPrincipalPolicy(iam.PolicyStatement.fromJson(statement));
         });
-        
+
          sa.node.addDependency(ns);
 
     const KastenK10HelmChart = clusterInfo.cluster.addHelmChart('k10', {
@@ -99,18 +98,20 @@ export class KastenK10AddOn implements ssp.ClusterAddOn  {
       repository: props.repository,
       namespace: props.namespace,
       version: props.version,
-      let values = merge({
+      values: {
          serviceAccount: {
-           create: props.serviceAccountCreate,
-           name: sa.serviceAccountName
+            create: false,
+            name: 'k10-sa-ssp'
          }
-      }, this.options.values ?? {})
+      },
     });
+
+
 
         KastenK10HelmChart.node.addDependency(sa);
 
         return Promise.resolve(KastenK10HelmChart);
     }
-    
-    
+
+
 }
