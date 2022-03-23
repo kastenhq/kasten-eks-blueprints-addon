@@ -34,7 +34,7 @@
     "eslint": "^7.26.0",
     "jest": "^26.4.2",
     "ts-jest": "^26.2.0",
-    "ts-node": "^9.0.0",
+    "ts-node": "^9.0.0"
   },
   "peerDependencies": {
     "@aws-cdk/core": "^1.148.0",
