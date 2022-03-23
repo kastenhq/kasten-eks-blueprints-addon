@@ -1,6 +1,6 @@
 {
   "name": "@kastenhq/kasten-aws-quickstart",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Kasten K10 Addon for AWS SSP CDK Platform",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -37,6 +37,9 @@
     "ts-node": "^9.0.0",
   },
   "peerDependencies": {
+    "@aws-cdk/core": "^1.148.0",
+    "@aws-cdk/aws-iam": "^1.148.0",
+    "@aws-cdk/aws-eks": "^1.148.0",
     "@aws-quickstart/ssp-amazon-eks": "^0.12.7",
     "source-map-support": "^0.5.16"
   }
