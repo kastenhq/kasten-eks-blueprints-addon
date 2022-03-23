@@ -1,6 +1,6 @@
 {
     "compilerOptions": {
-        "outDir": "dist",
+        "outDir": "./dist",
         "target": "ES2018",
         "module": "commonjs",
         "lib": [
@@ -33,7 +33,6 @@
         "dist"
     ],
     "include": [
-        "lib",
-        "examples"
+        "lib/**/*"
     ]
 }
