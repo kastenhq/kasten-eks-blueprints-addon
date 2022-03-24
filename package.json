@@ -1,7 +1,7 @@
 {
-  "name": "@kastenhq/kasten-aws-quickstart",
-  "version": "1.0.13",
-  "description": "Kasten K10 Addon for AWS SSP CDK Platform",
+  "name": "@kastenhq/kasten-eks-blueprints-addon",
+  "version": "1.0.0",
+  "description": "Kasten K10 Addon for AWS EKS Blueprints CDK Platform",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "bin": {
