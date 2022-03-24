@@ -1,4 +1,4 @@
-# Kasten K10 Add-On for AWS EKS Quickstart
+# Kasten K10 Add-On for Amazon EKS Blueprints
 
 **Kasten K10 by Veeam Overview**
 
@@ -18,7 +18,7 @@ Given K10’s extensive ecosystem support you have the flexibility to choose env
 The Kasten K10 add-on installs Kasten K10 into your Amazon EKS cluster. 
 
 ## Architecture
-Deploying this Quick Start for a new virtual private cloud (VPC) with default parameters builds the following K10 platform in the AWS Cloud. The diagram shows three Availability Zones, leveraging multiple AWS services.
+Deploying this Quickstart for a new virtual private cloud (VPC) with default parameters builds the following K10 platform in the AWS Cloud. The diagram shows three Availability Zones, leveraging multiple AWS services.
 ![Kasten-K10 Architecture](/docs/assets/images/kastenk10_image3.png)
 More detailed K10 architecture diagram is shown below.
 ![Kasten-K10 Architecture](/docs/assets/images/kastenk10_image4.png)
@@ -26,10 +26,10 @@ More detailed K10 architecture diagram is shown below.
 ## Installation
 
 ```
-npm install @kastenhq/kasten-aws-quickstart
+npm install @kastenhq/kasten-eks-blueprints-addon
 ```
 
-## Usage
+## Basic Usage
 
 ```typescript
 import 'source-map-support/register';
@@ -56,6 +56,16 @@ new ssp.EksBlueprint(
         }       
     });
 ```
+## Add-on Options
+
+| Option                  | Description                                         | Default                       |
+|-------------------------|-----------------------------------------------------|-------------------------------|
+| `repository`            | Repository of the Helm chart                        | "https://charts.kasten.io/"   |
+| `release  `             | Name of the Helm release                            | "k10"                         |
+| `namespace`             | Namespace to install Kasten K10                     | "kasten-io"                   |
+| `version`               | Version of Kasten K10                               | "4.5.11"                      |
+| `chart`                 | Helm Chart Name                                     | "k10"                         |
+| `values`                | Configuration values passed to the chart, options are documented [here](https://docs.kasten.io/latest/install/advanced.html#complete-list-of-k10-helm-options) | {}                            |
 
 ## Functionality
 
