@@ -1,6 +1,6 @@
 import { App } from '@aws-cdk/core';
 import * as ssp from '@aws-quickstart/ssp-amazon-eks';
-import { KastenK10AddOn } from '../dist;
+import { KastenK10AddOn } from '../dist';
 
 const app = new App();
 
