@@ -35,7 +35,7 @@ npm install @kastenhq/kasten-eks-blueprints-addon
 import 'source-map-support/register';
 import * as cdk from '@aws-cdk/core';
 import * as ssp from '@aws-quickstart/ssp-amazon-eks';
-import { KastenK10AddOn } from '@kastenhq/kasten-aws-quickstart';
+import { KastenK10AddOn } from '@kastenhq/kasten-eks-blueprints-addon';
 
 const app = new cdk.App();
 
