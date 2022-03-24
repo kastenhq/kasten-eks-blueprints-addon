@@ -1,6 +1,6 @@
 {
   "name": "@kastenhq/kasten-aws-quickstart",
-  "version": "1.0.10",
+  "version": "1.0.11",
   "description": "Kasten K10 Addon for AWS SSP CDK Platform",
   "main": "dist/lib/index.js",
   "types": "dist/lib/index.d.ts",
