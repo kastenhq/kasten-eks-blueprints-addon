@@ -1,7 +1,7 @@
-import * as iam from "@aws-cdk/aws-iam";
-import * as ssp from '@aws-quickstart/ssp-amazon-eks';
-import { Construct } from '@aws-cdk/core';
-import { ServiceAccount } from '@aws-cdk/aws-eks';
+import * as iam from "@aws-cdk-lib/aws-iam";
+import * as blueprints from '@aws-quickstart/eks-blueprints';
+import { Construct } from 'constructs';
+import { ServiceAccount } from '@aws-cdk-lib/aws-eks';
 import { KastenEC2IamPolicy } from "./iam-policy";
 
 
@@ -51,12 +51,11 @@ export interface KastenK10AddOnProps {
 }
 
 
-//const K10_SA = 'k10-sa-ssp';
 
 /**
  * Properties available to configure Kasten K10.
  * namespace default is kasten-io
- * version default is 4.5.11
+ * version default is 4.5.12
  * values as per https://docs.kasten.io
  */
 const defaultProps: KastenK10AddOnProps = {
@@ -65,11 +64,11 @@ const defaultProps: KastenK10AddOnProps = {
     namespace: 'kasten-io',
     chart: 'k10',
     repository: "https://charts.kasten.io/",
-    version: '4.5.11',
+    version: '4.5.12',
     serviceAccount: '',
 }
 
-export class KastenK10AddOn implements ssp.ClusterAddOn  {
+export class KastenK10AddOn implements blueprints.ClusterAddOn  {
 
    // private options: KastenK10AddOnProps;
 
@@ -79,16 +78,16 @@ export class KastenK10AddOn implements ssp.ClusterAddOn  {
       this.options = { ...defaultProps, ...props };
     }
 
-    deploy(clusterInfo: ssp.ClusterInfo): Promise<Construct> {
+    deploy(clusterInfo: blueprints.ClusterInfo): Promise<Construct> {
         const props = this.options;
         const cluster = clusterInfo.cluster;
 
         // Create namespace.
-        const ns = ssp.utils.createNamespace(props.namespace!, clusterInfo.cluster, true);
+        const ns = blueprints.utils.createNamespace(props.namespace!, clusterInfo.cluster, true);
 
         //Create Service Account
-        const sa = clusterInfo.cluster.addServiceAccount('k10-sa-ssp', {
-            name: 'k10-sa-ssp',
+        const sa = clusterInfo.cluster.addServiceAccount('k10-blueprint-sa', {
+            name: 'k10-blueprint-sa',
             namespace: props.namespace
         });
 
@@ -108,7 +107,7 @@ export class KastenK10AddOn implements ssp.ClusterAddOn  {
       values: {
          serviceAccount: {
             create: false,
-            name: 'k10-sa-ssp'
+            name: 'k10-blueprint-sa'
          }
       },
     });

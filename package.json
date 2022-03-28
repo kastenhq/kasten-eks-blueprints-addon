@@ -1,6 +1,6 @@
 {
   "name": "@kastenhq/kasten-eks-blueprints-addon",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Kasten K10 Addon for AWS EKS Blueprints CDK Platform",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -29,7 +29,6 @@
     "@types/node": "10.17.27",
     "@typescript-eslint/eslint-plugin": "^4.23.0",
     "@typescript-eslint/parser": "^4.23.0",
-    "aws-cdk": "1.143.0",
     "copyfiles": "^2.4.1",
     "eslint": "^7.26.0",
     "jest": "^26.4.2",
@@ -38,7 +37,8 @@
     "typescript": "~3.9.7"
   },
   "peerDependencies": {
-    "@aws-quickstart/ssp-amazon-eks": "^0.12.7",
-    "source-map-support": "^0.5.16"
+    "@aws-quickstart/eks-blueprints": "latest",
+    "source-map-support": "^0.5.16",
+    "aws-cdk": "^2.17.0"
   }
 }
