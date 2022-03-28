@@ -1,4 +1,4 @@
-# Kasten K10 Add-On for Amazon EKS Blueprints
+# Kasten K10 Add-On for Amazon EKS Blueprints for CDK
 
 **Kasten K10 by Veeam Overview**
 
