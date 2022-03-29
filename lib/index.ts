@@ -1,7 +1,7 @@
-import * as iam from "@aws-cdk-lib/aws-iam";
 import * as blueprints from '@aws-quickstart/eks-blueprints';
+import * as iam from '@aws-cdk-lib/aws-iam';
 import { Construct } from 'constructs';
-import { ServiceAccount } from '@aws-cdk-lib/aws-eks';
+import { ServiceAccount } from 'aws-cdk-lib/aws-eks';
 import { KastenEC2IamPolicy } from "./iam-policy";
 
 
@@ -55,7 +55,7 @@ export interface KastenK10AddOnProps {
 /**
  * Properties available to configure Kasten K10.
  * namespace default is kasten-io
- * version default is 4.5.12
+ * by default the latest k10 release is installed unless specified
  * values as per https://docs.kasten.io
  */
 const defaultProps: KastenK10AddOnProps = {
@@ -64,13 +64,12 @@ const defaultProps: KastenK10AddOnProps = {
     namespace: 'kasten-io',
     chart: 'k10',
     repository: "https://charts.kasten.io/",
-    version: '4.5.12',
+    //version: '',
     serviceAccount: '',
 }
 
 export class KastenK10AddOn implements blueprints.ClusterAddOn  {
 
-   // private options: KastenK10AddOnProps;
 
     readonly options: KastenK10AddOnProps;
 
@@ -111,8 +110,6 @@ export class KastenK10AddOn implements blueprints.ClusterAddOn  {
          }
       },
     });
-
-
 
         KastenK10HelmChart.node.addDependency(sa);
 

@@ -24,6 +24,7 @@ More detailed K10 architecture diagram is shown below.
 ![Kasten-K10 Architecture](/docs/assets/images/kastenk10_image4.png)
 
 ## Installation
+Follow new project setup guidelines from https://github.com/aws-quickstart/cdk-eks-blueprints
 
 ```
 npm install @kastenhq/kasten-eks-blueprints-addon
@@ -32,29 +33,17 @@ npm install @kastenhq/kasten-eks-blueprints-addon
 ## Basic Usage
 
 ```typescript
-import 'source-map-support/register';
-import * as cdk from '@aws-cdk/core';
-import * as ssp from '@aws-quickstart/ssp-amazon-eks';
+import { App } from 'aws-cdk-lib';
+import * as blueprints from '@aws-quickstart/eks-blueprints';
 import { KastenK10AddOn } from '@kastenhq/kasten-eks-blueprints-addon';
 
-const app = new cdk.App();
+const app = new App();
 
-const addOns: Array<ssp.ClusterAddOn> = [
-  new KastenK10AddOn(),
-];
+blueprints.EksBlueprint.builder()
+    .addOns(new blueprints.ClusterAutoScalerAddOn)
+    .addOns(new KastenK10AddOn)
+    .build(app, 'eks-with-kastenk10');
 
-new ssp.EksBlueprint(
-    app, 
-    {
-        id: 'my-stack-name', 
-        addOns,
-    },
-    {
-        env:{
-          account: <AWS_ACCOUNT_ID>,
-          region: <AWS_REGION>, 
-        }       
-    });
 ```
 ## Add-on Options
 
@@ -63,7 +52,7 @@ new ssp.EksBlueprint(
 | `repository`            | Repository of the Helm chart                        | "https://charts.kasten.io/"   |
 | `release  `             | Name of the Helm release                            | "k10"                         |
 | `namespace`             | Namespace to install Kasten K10                     | "kasten-io"                   |
-| `version`               | Version of Kasten K10                               | "4.5.11"                      |
+| `version`               | Version of Kasten K10, defaults to latest release   | ""                            |
 | `chart`                 | Helm Chart Name                                     | "k10"                         |
 | `values`                | Configuration values passed to the chart, options are documented [here](https://docs.kasten.io/latest/install/advanced.html#complete-list-of-k10-helm-options) | {}                            |
 
