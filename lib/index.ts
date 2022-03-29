@@ -1,5 +1,5 @@
 import * as blueprints from '@aws-quickstart/eks-blueprints';
-import * as iam from '@aws-cdk-lib/aws-iam';
+import * as iam from 'aws-cdk-lib/aws-iam';
 import { Construct } from 'constructs';
 import { ServiceAccount } from 'aws-cdk-lib/aws-eks';
 import { KastenEC2IamPolicy } from "./iam-policy";
